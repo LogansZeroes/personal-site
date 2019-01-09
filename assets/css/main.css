@@ -1563,7 +1563,7 @@ input, select, textarea {
 
 		header > p {
 			margin: 0.5em 0 0 0;
-			color: #aaa;
+			color: #000;
 		}
 
 		@media screen and (max-width: 736px) {
