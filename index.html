@@ -69,7 +69,7 @@
 								<header>
 									<h1>About me:</h1>
 									<HR>
-									<p>I'm a 29-year-old developer with a history of delivering elegant products and enjoyable experiences.
+									<span>I'm a </span><span id="age"></span><span>-year-old developer with a history of delivering elegant products and enjoyable experiences.
 										As an engineer and even in my day-to-day, I strive to make things better for others.
 										I'm most excited by products with the potential to improve lives, such as cryptocurrency.</p>
 								</header>
@@ -131,6 +131,10 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+			<script type="text/javascript">
+				const birth = new Date(1990,11,27);
+				const ageDate = new Date(new Date() - birth)
+				document.getElementById("age").innerText = Math.abs(ageDate.getUTCFullYear() - 1970).toString()
+			</script>
 	</body>
 </html>
