@@ -1,0 +1,146 @@
+@import url('/assets/css/main.css');
+
+/* Next.js overrides to confine scrolling inside the white panel */
+html, body {
+  height: 100%;
+  overflow: hidden; /* prevent whole-page scroll */
+}
+
+body {
+  margin: 0;
+}
+
+#wrapper {
+  min-height: 100vh; /* ensure wrapper fills viewport */
+  height: 100vh; /* give a definite height so children can size/scroll */
+  display: flex;
+  flex-direction: column;
+  padding: 1em 0 0em 0 !important; /* add top padding, reduce bottom padding */
+}
+
+#main {
+  overflow: hidden; /* let child panels handle scrolling */
+  flex: 1; /* take remaining vertical space between nav and footer */
+  min-height: 0; /* allow child flex items to shrink and scroll */
+  display: flex; /* allow panel to flex and fill */
+  align-items: stretch; /* child panel fills available height */
+  /* Neutralize theme JS min/max height locks */
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+#nav,
+#footer {
+  flex-shrink: 0; /* keep nav/footer visible and not overlapping */
+}
+
+#nav {
+  margin-top: 0 !important; /* remove excess top spacing */
+}
+
+#footer {
+  padding-top: 1em !important; /* tighten footer spacing so content isn't cut off */
+}
+
+#main > .panel {
+  box-sizing: border-box;
+  flex: 1 1 auto; /* fill available space */
+  min-height: 0; /* enable internal scroll */
+  max-height: 100%; /* do not exceed #main height */
+  display: flex; /* allow internal layout control */
+  flex-direction: column; /* header stays on top */
+}
+
+#main > .panel.intro {
+  overflow: hidden; /* intro stays fixed like original */
+  flex: 0 0 auto; /* don't force intro to consume all height */
+  display: flex; /* keep original intro layout (two columns) */
+  height: 27em !important; /* match theme's fixed intro height */
+}
+
+@media screen and (max-width: 736px) {
+  /* keep behavior consistent on small screens */
+}
+
+/* Make only the portfolio content area scroll inside the white panel */
+#main > .panel > header {
+  flex: 0 0 auto;
+}
+
+#main > .panel > section {
+  flex: 1 1 auto;
+  min-height: 0; /* allow content to shrink within panel */
+  overflow: visible; /* let the panel handle scrolling */
+}
+
+/* Guarantee the intro image is visible (use theme's original sizing/position) */
+#main > .panel.intro .pic img {
+  visibility: visible !important;
+}
+
+/* Ensure non-intro panels scroll internally and don't overflow the viewport */
+#main > .panel:not(.intro) {
+  height: 100%; /* fill #main so scrollbar has a bounded container */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Move nav tooltips to bottom instead of top */
+#nav a span {
+  top: auto !important;
+  bottom: -2.75em !important;
+  z-index: 100;
+}
+
+#nav a span:after {
+  bottom: auto !important;
+  top: -0.4em !important;
+  border-top: none !important;
+  border-bottom: solid 0.6em #222222 !important;
+}
+
+/* For shorter windows, further reduce vertical chrome to keep everything centered */
+@media screen and (max-height: 820px) {
+  #wrapper { padding: 0 !important; }
+  #nav { margin-top: 0 !important; }
+  #footer { padding-top: 0.5em !important; }
+}
+
+/* Mobile optimizations */
+@media screen and (max-width: 736px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #wrapper {
+    padding: 0.5em 0 0 0 !important;
+    width: auto !important;
+    max-width: calc(100% - 2em);
+    margin: 0 auto;
+  }
+
+  #main > .panel.intro {
+    height: 20em !important; /* smaller intro on mobile */
+  }
+
+  #footer .copyright li {
+    display: block;
+    padding-left: 0;
+    margin-left: 0;
+    border-left: 0;
+    margin-bottom: 0.5em;
+  }
+}
+
+/* Extra small mobile */
+@media screen and (max-width: 360px) {
+  #wrapper {
+    padding: 0.25em 0 0 0 !important;
+    max-width: 100%;
+  }
+
+  #main > .panel.intro {
+    height: 18em !important;
+  }
+}
