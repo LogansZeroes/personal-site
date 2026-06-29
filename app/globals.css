@@ -1,146 +1,201 @@
-@import url('/assets/css/main.css');
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-/* Next.js overrides to confine scrolling inside the white panel */
+:root {
+  --font-playfair: 'Playfair Display', serif;
+  --font-inter: 'Inter', sans-serif;
+
+  --bg: #0a0a0a;
+  --text-primary: #ede8df;
+  --text-secondary: #5a5650;
+  --text-dim: #2e2c2a;
+  --accent: #c8a96e;
+  --accent-hover: #e0c48a;
+}
+
 html, body {
   height: 100%;
-  overflow: hidden; /* prevent whole-page scroll */
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  margin: 0;
+  background: radial-gradient(ellipse at 50% 40%, #161410 0%, var(--bg) 65%);
+  min-height: 100vh;
 }
 
-#wrapper {
-  min-height: 100vh; /* ensure wrapper fills viewport */
-  height: 100vh; /* give a definite height so children can size/scroll */
+/* ── Layout ── */
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.center {
   display: flex;
-  flex-direction: column;
-  padding: 1em 0 0em 0 !important; /* add top padding, reduce bottom padding */
+  align-items: center;
+  justify-content: center;
 }
 
-#main {
-  overflow: hidden; /* let child panels handle scrolling */
-  flex: 1; /* take remaining vertical space between nav and footer */
-  min-height: 0; /* allow child flex items to shrink and scroll */
-  display: flex; /* allow panel to flex and fill */
-  align-items: stretch; /* child panel fills available height */
-  /* Neutralize theme JS min/max height locks */
-  min-height: 0 !important;
-  max-height: none !important;
+/* ── Name ── */
+
+.name {
+  font-family: var(--font-playfair);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
 }
 
-#nav,
-#footer {
-  flex-shrink: 0; /* keep nav/footer visible and not overlapping */
+/* ── Rule ── */
+
+.rule {
+  width: 2.5rem;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: 1.75rem;
+  opacity: 0.6;
 }
 
-#nav {
-  margin-top: 0 !important; /* remove excess top spacing */
+/* ── Location ── */
+
+.location {
+  font-family: var(--font-inter);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
 }
 
-#footer {
-  padding-top: 1em !important; /* tighten footer spacing so content isn't cut off */
+/* ── Korean name ── */
+
+.korean-name {
+  font-family: var(--font-inter);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-top: 0.6rem;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-#main > .panel {
-  box-sizing: border-box;
-  flex: 1 1 auto; /* fill available space */
-  min-height: 0; /* enable internal scroll */
-  max-height: 100%; /* do not exceed #main height */
-  display: flex; /* allow internal layout control */
-  flex-direction: column; /* header stays on top */
+.korean-tip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
-#main > .panel.intro {
-  overflow: hidden; /* intro stays fixed like original */
-  flex: 0 0 auto; /* don't force intro to consume all height */
-  display: flex; /* keep original intro layout (two columns) */
-  height: 27em !important; /* match theme's fixed intro height */
+.korean-tip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 1px solid #6a6460;
+  font-size: 0.55rem;
+  letter-spacing: 0;
+  color: #9a9288;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  user-select: none;
+  text-decoration: none;
 }
 
-@media screen and (max-width: 736px) {
-  /* keep behavior consistent on small screens */
+.korean-tip-wrap:hover .korean-tip-icon {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-/* Make only the portfolio content area scroll inside the white panel */
-#main > .panel > header {
-  flex: 0 0 auto;
+.korean-tip {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1814;
+  border: 1px solid #2a2722;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-#main > .panel > section {
-  flex: 1 1 auto;
-  min-height: 0; /* allow content to shrink within panel */
-  overflow: visible; /* let the panel handle scrolling */
+.korean-tip-wrap:hover .korean-tip {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Guarantee the intro image is visible (use theme's original sizing/position) */
-#main > .panel.intro .pic img {
-  visibility: visible !important;
+.korean-tip {
+  font-family: var(--font-inter);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
-/* Ensure non-intro panels scroll internally and don't overflow the viewport */
-#main > .panel:not(.intro) {
-  height: 100%; /* fill #main so scrollbar has a bounded container */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+/* ── Footer / Links ── */
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 2rem;
 }
 
-/* Move nav tooltips to bottom instead of top */
-#nav a span {
-  top: auto !important;
-  bottom: -2.75em !important;
-  z-index: 100;
+.footer a {
+  font-family: var(--font-inter);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7a7368;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-#nav a span:after {
-  bottom: auto !important;
-  top: -0.4em !important;
-  border-top: none !important;
-  border-bottom: solid 0.6em #222222 !important;
+.footer a:hover {
+  color: var(--accent-hover);
 }
 
-/* For shorter windows, further reduce vertical chrome to keep everything centered */
-@media screen and (max-height: 820px) {
-  #wrapper { padding: 0 !important; }
-  #nav { margin-top: 0 !important; }
-  #footer { padding-top: 0.5em !important; }
+/* ── Fade-in ── */
+
+.page {
+  opacity: 0;
+  animation: fadeIn 1.2s ease 0.2s forwards;
 }
 
-/* Mobile optimizations */
-@media screen and (max-width: 736px) {
-  html, body {
-    height: 100%;
-    overflow: hidden;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ── */
+
+@media (max-width: 480px) {
+  .page {
+    padding: 2.5rem 1.75rem;
   }
 
-  #wrapper {
-    padding: 0.5em 0 0 0 !important;
-    width: auto !important;
-    max-width: calc(100% - 2em);
-    margin: 0 auto;
-  }
-
-  #main > .panel.intro {
-    height: 20em !important; /* smaller intro on mobile */
-  }
-
-  #footer .copyright li {
-    display: block;
-    padding-left: 0;
-    margin-left: 0;
-    border-left: 0;
-    margin-bottom: 0.5em;
-  }
-}
-
-/* Extra small mobile */
-@media screen and (max-width: 360px) {
-  #wrapper {
-    padding: 0.25em 0 0 0 !important;
-    max-width: 100%;
-  }
-
-  #main > .panel.intro {
-    height: 18em !important;
+  .footer {
+    gap: 1.25rem;
+    flex-wrap: wrap;
   }
 }

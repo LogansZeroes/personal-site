@@ -1,27 +1,37 @@
 import type { Metadata, Viewport } from 'next';
+import { Playfair_Display, Inter } from 'next/font/google';
 import React from 'react';
 import './globals.css';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  userScalable: false,
 };
 
 export const metadata: Metadata = {
-  title: "Logan Radochonski: Developer & Entrepreneur",
-  description: "Logan Radochonski's Personal Website",
-  authors: [{ name: 'Logan Radochonksi' }],
+  title: 'Logan Radochonski',
+  description: 'Logan Radochonski — Seoul, Korea.',
+  authors: [{ name: 'Logan Radochonski' }],
   openGraph: {
-    title: "Logan Radochonski: Developer & Entrepreneur",
-    description: "Logan Radochonski's Personal Website",
+    title: 'Logan Radochonski',
+    description: 'Seoul, Korea.',
     type: 'website',
-    images: ['/images/logo.png'],
   },
   twitter: {
     card: 'summary',
-    title: "Logan Radochonski: Developer & Entrepreneur",
-    description: "Logan Radochonski's Personal Website",
+    title: 'Logan Radochonski',
   },
   icons: {
     icon: [
@@ -35,8 +45,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="is-preload">{children}</body>
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
