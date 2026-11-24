@@ -7,9 +7,9 @@ export default function Page() {
             Logan<br />Radochonski
           </h1>
           <div className="rule" />
-          <p className="location">Seoul, Korea</p>
+          {/* <p className="location">Seoul, Korea</p> */}
           <p className="korean-name">
-            정지민
+            성지민
             <span className="korean-tip-wrap">
               <a className="korean-tip-icon" href="https://breakingbap.com/korean" target="_blank" rel="noopener noreferrer">?</a>
               <span className="korean-tip">How do I read your name? →</span>
